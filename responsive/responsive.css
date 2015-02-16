@@ -55,8 +55,15 @@ and (max-width: 899px) {
 }
 
 /*---How the project was documented: 800>=X>700---*/
-
-
+@media only screen 
+and (min-width: 700px) 
+and (max-width: 799px) {
+	.software {
+		width: 128px;
+		height: 240px;
+		background: url(software.png) 0 -240px;
+	}
+}
 
 /*---What operations installed: 700>=X>600---*/
 
