@@ -2,15 +2,15 @@
 
 /*---How the customer explained it: >1200px---*/
 @media only screen 
-and (min-device-width : 1200px) {
+and (min-width : 1200px) {
 	.software {
 		width: 128px;
 		height: 240px;
-		background: url(software.png);
+		background: url(software.png) 0 0;
+	}
 }
 
 /*---How the Project Leader understood it: 1200>=X>1100---*/
-
 
 
 /*---How the Analyst designed it: 1100>=X>1000---*/
