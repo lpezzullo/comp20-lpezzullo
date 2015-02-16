@@ -1,0 +1,44 @@
+/*---How the customer explained it: >1200px---*/
+@media only screen 
+and (min-device-width : 1200px) {
+	.software {
+		width:;
+}
+
+/*---How the Project Leader understood it: 1200>=X>1100---*/
+
+
+
+/*---How the Analyst designed it: 1100>=X>1000---*/
+
+
+
+/*---How the Programmer wrote it: 1000>=X>900---*/
+
+
+
+/*---How the Business Consultant described it: 900>=X>800---*/
+
+
+
+/*---How the project was documented: 800>=X>700---*/
+
+
+
+/*---What operations installed: 700>=X>600---*/
+
+
+
+/*---How the customer was billed: 600>=X>500---*/
+
+
+
+/*---How it was supported: 500>=X>400---*/
+
+
+
+/*---What the customer really needed: X<=400---*/
+
+
+
+
