@@ -1,3 +1,5 @@
-var canvas = document.getElementById('game_canvas');
-ctx = canvas.getContext('2d');
+function draw() {
+	var canvas = document.getElementById('game_canvas');
+	var ctx = canvas.getContext('2d');
 
+}
