@@ -1,1 +1,3 @@
-// Replace this with your code...
+var canvas = document.getElementById('game_canvas');
+ctx = canvas.getContext('2d');
+
