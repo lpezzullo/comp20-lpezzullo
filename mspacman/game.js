@@ -6,7 +6,7 @@ function init() {
 		img.addEventListener("load", function() {
   		// execute drawImage statements here
   			ctx.drawImage(img, 322, 2, 464, 136, 0, 0, 464, 136);
-			ctx.drawImage(img, 83, 23, 13, 14, 35, 31, 13, 14);
+			ctx.drawImage(img, 83, 23, 13, 14, 25, 29, 13, 14);
 		}, false);
 		img.src = "pacman10-hp-sprite.png";
 		
