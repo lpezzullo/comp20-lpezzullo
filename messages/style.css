@@ -1,1 +1,8 @@
-/* Your CSS here... */
+#messages {
+	font-weight: bold;
+	color: #FF00FF;
+	background-color: #FFFF00;
+	border-color: #66FF66;
+	border-style: dashed;
+	border-width: 10px;
+}
