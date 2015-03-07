@@ -12,7 +12,7 @@ function parse() {
 	if (xhr.readyState == 4 && xhr.status == 200) {
 		alert("Got data back!");
 		data = JSON.parse(xhr.responseText);
-		console.log(data);
+		//console.log(data);
 		var result = "";
 		for (i = 0; i < data.length; i++) {
 			result += "<p>" + data[i]['username'] + " - " + data[i]["content"] + "</p>";
