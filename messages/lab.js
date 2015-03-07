@@ -2,7 +2,8 @@
 // Create instance of XHR object
 xhr = new XMLHttpRequest();
 // Set up the request
-xhr.open("get", "http://tuftsdev.github.io/comp20-lpezzullo/messages/data.json", true);
+//xhr.open("get", "http://tuftsdev.github.io/comp20-lpezzullo/messages/data.json", true);
+xhr.open("get", "http://messagehub.herokuapp.com/messages.json", true);
 // Set up handler for the response
 xhr.onreadystatechange = parse;
 // Execute the request
