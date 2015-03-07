@@ -1,7 +1,7 @@
 // Create instance of XHR object
 xhr = new XMLHttpRequest();
 // Set up the request
-xhr.open("get", "data.json", true);
+xhr.open("get", "https://github.com/tuftsdev/comp20-lpezzullo/messages/data.json", true);
 // Set up handler for the response
 xhr.onreadystatechange = myCallbackFunction;
 // Execute the request
@@ -15,6 +15,6 @@ function myCallbackFunction() {
 		for (i = 0; i < data.length; i++) {
 			result += "<p>" + data[i]['username'] + " - " + data[i]["content"] + "</p>";
 		}*/
-		document.getElementById("list").innerHTML = xhr.responseText;
+		document.getElementById("messages").innerHTML = xhr.responseText;
 	}
 }
