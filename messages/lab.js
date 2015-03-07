@@ -17,6 +17,7 @@ function parse() {
 		for (i = 0; i < data.length; i++) {
 			result += "<p>" + data[i]['username'] + " - " + data[i]["content"] + "</p>";
 		}
-		document.getElementById("messages").innerHTML = xhr.responseText;
+		document.getElementById("messages").innerHTML = result;
+		//document.getElementById("messages").innerHTML = xhr.responseText;
 	}
 }
