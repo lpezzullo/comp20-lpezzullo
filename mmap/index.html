@@ -9,6 +9,7 @@
 			function getData() {
 				xhr = new XMLHttpRequest();
 				xhr.open("post", "https://secret-about-box.herokuapp.com/sendLocation", true);
+				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 				xhr.onreadystatechange = dataReady;
 				xhr.send(null); // Go! Execute!
 			}
@@ -91,7 +92,7 @@
 			*/
 		</script>
 	</head>
-	<body onload = "getData">
+	<body onload = "getData()">
 		<div id = "map-canvas">Getting your location...</div>
 	</body>
 </html>
