@@ -7,11 +7,18 @@
 		<script>
 			var xhr;
 			function getData() {
+				var myLat = 0;
+				var myLng = 0;
+				navigator.geolocation.getCurrentPosition(function(position) {
+					console.log("2. Finally got your location!");
+					myLat = position.coords.latitude;
+					myLng = position.coords.longitude;
+					});
 				xhr = new XMLHttpRequest();
 				xhr.open("post", "https://secret-about-box.herokuapp.com/sendLocation", true);
-				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhr.onreadystatechange = dataReady;
-				xhr.send("login=RoyMcFatter&lat=" + 123 + "&lng=" + 123);
+				xhr.send("login=RoyMcFatter&lat=" + myLat + "&lng=" + myLng);
 			}
 
 			function dataReady() {
@@ -25,11 +32,16 @@
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					// scheduleData = JSON.parse(xhr.responseText);
 					console.log("Got data!");
+
 					document.getElementById("map-canvas").innerHTML += xhr.responseText;
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
 					console.log("Error 500");
 				}
+			}
+
+			function parseResponse() {
+
 			}
 /*			function solemnlySwear() {
 				var myLat = 0;
