@@ -25,6 +25,7 @@
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					// scheduleData = JSON.parse(xhr.responseText);
 					console.log("Got data!");
+					document.getElementById("map-canvas").innerHTML += xhr.responseText;
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
 					console.log("Error 500");
