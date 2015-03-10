@@ -11,7 +11,7 @@
 				xhr.open("post", "https://secret-about-box.herokuapp.com/sendLocation", true);
 				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 				xhr.onreadystatechange = dataReady;
-				xhr.send(null); // Go! Execute!
+				xhr.send("login=RoyMcFatter&lat=" + 123 + "&lng=" + 123);
 			}
 
 			function dataReady() {
