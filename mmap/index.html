@@ -48,6 +48,7 @@
 			function dropMarker(landmark)
 			{
 				var birdIcon = new Image();
+				birdIcon.src = "me2.jpg";
 				birdIcon.addEventListener("load", function() {
 					// Create a marker			
 					var marker = new google.maps.Marker({
@@ -66,7 +67,6 @@
 						infowindow.open(map, marker);
 						});
 				}, false);
-				birdIcon.src = "me2.jpg";
 			}
 		</script>
 	</head>
