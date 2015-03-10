@@ -25,11 +25,8 @@
 				}
 				console.log("4. Leaving getMyLocation(). Good bye cruel world!");
 
-
-
-
-				// Faneuil Hall
-				var landmark = new google.maps.LatLng(42.3599611, -71.0567528);
+				// My Location
+				var landmark = new google.maps.LatLng(myLat, myLng);
 			
 				// Set up map
 				var myOptions = {
@@ -44,7 +41,7 @@
 				// Create a marker				
 				var marker = new google.maps.Marker({
 					position: landmark,
-					title: "Faneuil Hall, Boston, MA"
+					title: "Your location!"
 				});
 				marker.setMap(map);
 				
