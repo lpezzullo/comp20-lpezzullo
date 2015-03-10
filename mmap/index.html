@@ -55,17 +55,19 @@
 						icon: birdIcon
 					});
 					marker.setMap(map);
-					}
-				, false);
+
+					// This is a global info window...
+					var infowindow = new google.maps.InfoWindow();
+					
+					// Open info window on click of marker
+					google.maps.event.addListener(marker, 'click', function() {
+						infowindow.setContent(marker.title);
+						infowindow.open(map, marker);
+						});
+				}, false);
 				birdIcon.src = "me2.jpg";
 				
-				// This is a global info window...
-				var infowindow = new google.maps.InfoWindow();
-				
-				// Open info window on click of marker
-				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.setContent(marker.title);
-					infowindow.open(map, marker);
+
 				});
 			}
 		</script>
