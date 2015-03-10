@@ -26,7 +26,11 @@
 				console.log("Ready state changed to" + xhr.readyState);
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					console.log("Got data!");
-					document.getElementById("map-canvas").innerHTML += JSON.parse(xhr.responseText);
+					var data = JSON.parse(xhr.responseText);
+					for(x in data) {
+						console.log(data[i].login);
+					}
+//					document.getElementById("map-canvas").innerHTML += JSON.parse(xhr.responseText);
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
 					console.log("Error 500");
