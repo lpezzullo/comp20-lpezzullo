@@ -8,7 +8,7 @@
 			var xhr;
 			function getData() {
 				xhr = new XMLHttpRequest();
-				xhr.open("post, "https://secret-about-box.herokuapp.com/sendLocation", true);
+				xhr.open("post", "https://secret-about-box.herokuapp.com/sendLocation", true);
 				xhr.onreadystatechange = dataReady;
 				xhr.send(null); // Go! Execute!
 			}
