@@ -42,11 +42,7 @@
 				
 				// Create the map in the "map_canvas" <div>
 				var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-				dropMarker(landmark);
-			}
-
-			function dropMarker(landmark)
-			{
+				// dropMarker(landmark);
 				var birdIcon = new Image();
 				birdIcon.src = "me2.jpg";
 				birdIcon.addEventListener("load", function() {
@@ -68,6 +64,11 @@
 						});
 				}, false);
 			}
+
+//			function dropMarker(landmark)
+//			{
+				
+//			}
 		</script>
 	</head>
 
