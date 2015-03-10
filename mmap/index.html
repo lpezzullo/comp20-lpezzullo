@@ -13,26 +13,19 @@
 					console.log("2. Finally got your location!");
 					myLat = position.coords.latitude;
 					myLng = position.coords.longitude;
+					xhr = new XMLHttpRequest();
+					xhr.open("post", "https://secret-about-box.herokuapp.com/sendLocation", true);
+					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhr.onreadystatechange = dataReady;
+					xhr.send("login=RoyMcFatter&lat=" + myLat + "&lng=" + myLng);
 					});
-				xhr = new XMLHttpRequest();
-				xhr.open("post", "https://secret-about-box.herokuapp.com/sendLocation", true);
-				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr.onreadystatechange = dataReady;
-				xhr.send("login=RoyMcFatter&lat=" + myLat + "&lng=" + myLng);
+				
 			}
 
 			function dataReady() {
-			// The readyState numbers:
-			// 0 = not initialized
-			// 1 = Set up
-			// 2 = Sent
-			// 3 = In progress
-			// 4 = Complete
 				console.log("Ready state changed to" + xhr.readyState);
 				if (xhr.readyState == 4 && xhr.status == 200) {
-					// scheduleData = JSON.parse(xhr.responseText);
 					console.log("Got data!");
-
 					document.getElementById("map-canvas").innerHTML += xhr.responseText;
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
