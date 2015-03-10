@@ -7,8 +7,8 @@
 		<script>
 			function drawMap()
 			{
-				myLat = 0;
-				myLng = 0;
+				var myLat = 0;
+				var myLng = 0;
 				
 				console.log("1. In getMyLocation()");
 				if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
@@ -26,7 +26,7 @@
 				console.log("4. Leaving getMyLocation(). Good bye cruel world!");
 
 				// My Location
-				var landmark = new google.maps.LatLng(myLat, myLng);
+				var landmark = new google.maps.LatLng(myLat,myLng);
 			
 				// Set up map
 				var myOptions = {
