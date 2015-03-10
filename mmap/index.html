@@ -21,7 +21,7 @@
 			// 2 = Sent
 			// 3 = In progress
 			// 4 = Complete
-				console.log("Ready state changed to" + readyState);
+				console.log("Ready state changed to" + xhr.readyState);
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					// scheduleData = JSON.parse(xhr.responseText);
 					console.log("Got data!");
