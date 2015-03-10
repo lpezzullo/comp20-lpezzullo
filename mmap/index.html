@@ -27,7 +27,7 @@
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					console.log("Got data!");
 					var data = JSON.parse(xhr.responseText);
-					for(var x in data) {
+					for(var i in data) {
 						console.log(data[i].login);
 					}
 //					document.getElementById("map-canvas").innerHTML += JSON.parse(xhr.responseText);
