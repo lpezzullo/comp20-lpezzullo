@@ -16,6 +16,8 @@
 							myLat = position.coords.latitude;
 							myLng = position.coords.longitude;
 							console.log("Lat = " + myLat + ", Long = " + myLng);
+							console.log("Drawing the map...");
+							drawMap(myLat,myLng);
 							console.log("3. Leaving the function(position)...");
 						});
 				}
@@ -23,7 +25,7 @@
 					alert("Geolocation is not supported by your web browser.  What a shame!");
 				}
 				console.log("4. Leaving getMyLocation(). Good bye cruel world!");
-				drawMap(myLat,myLng);
+				
 			}
 
 			function drawMap(myLat, myLng)
