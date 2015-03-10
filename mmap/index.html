@@ -5,12 +5,36 @@
 	<link rel="stylesheet" href="style.css" />
 	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		<script>
-			function solemnlySwear() {
+			var xhr;
+			function getData() {
+				xhr = new XMLHttpRequest();
+				xhr.open("post, "https://secret-about-box.herokuapp.com/sendLocation", true);
+				xhr.onreadystatechange = dataReady;
+				xhr.send(null); // Go! Execute!
+			}
+
+			function dataReady() {
+			// The readyState numbers:
+			// 0 = not initialized
+			// 1 = Set up
+			// 2 = Sent
+			// 3 = In progress
+			// 4 = Complete
+				console.log("Ready state changed to" + readyState);
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					// scheduleData = JSON.parse(xhr.responseText);
+					console.log("Got data!");
+				}
+				else if (xhr.readyState == 4 && xhr.status == 500) {
+					console.log("Error 500");
+				}
+			}
+/*			function solemnlySwear() {
 				var myLat = 0;
 				var myLng = 0;
 				
 				console.log("1. In getMyLocation()");
-				if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
+				if (navigator.geolocation) { 
 					navigator.geolocation.getCurrentPosition(function(position) {
 							console.log("2. Finally got your location!");
 							myLat = position.coords.latitude;
@@ -35,7 +59,7 @@
 			
 				// Set up map
 				var myOptions = {
-					zoom: 13, // The larger the zoom number, the bigger the zoom
+					zoom: 13,
 					center: landmark,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};
@@ -64,15 +88,11 @@
 						});
 				}, false);
 			}
-
-//			function dropMarker(landmark)
-//			{
-				
-//			}
+			*/
 		</script>
 	</head>
-
-	<body onload = "solemnlySwear()">
-		<div id = "map-canvas">Getting your location...</div>
+	<body onload = "getData">
+//	<body onload = "solemnlySwear()">
+//		<div id = "map-canvas">Getting your location...</div>
 	</body>
 </html>
