@@ -15,9 +15,8 @@
 							console.log("2. Finally got your location!");
 							myLat = position.coords.latitude;
 							myLng = position.coords.longitude;
-							console.log("Lat = " + myLat + ", Long = " + myLng);
-							console.log("Drawing the map...");
 							drawMap(myLat,myLng);
+							console.log("Lat = " + myLat + ", Long = " + myLng);
 							console.log("3. Leaving the function(position)...");
 						});
 				}
@@ -30,7 +29,7 @@
 
 			function drawMap(myLat, myLng)
 			{
-
+				console.log("Executing drawMap()");
 				// My Location
 				var landmark = new google.maps.LatLng(myLat,myLng);
 			
