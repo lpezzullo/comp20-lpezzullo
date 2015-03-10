@@ -6,6 +6,7 @@
 	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		<script>
 			function solemnlySwear() {
+				// "I solemnly swear that I am up to no good."
 				var myLat = 0;
 				var myLng = 0;
 				
@@ -43,10 +44,12 @@
 				// Create the map in the "map_canvas" <div>
 				var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
 
-				// Create a marker				
+				// Create a marker		
+				var birdIcon = "me2.jpg";		
 				var marker = new google.maps.Marker({
 					position: landmark,
-					title: "Your location!"
+					title: "You are here!"
+					icon: birdIcon;
 				});
 				marker.setMap(map);
 				
