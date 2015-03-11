@@ -136,6 +136,10 @@ console.log("theirLat = " + theirLat + ", theirLng = " + theirLng);
 			{
 				var R = 6371000; // metres
 
+				Number.prototype.toRad = function() {
+					return this * Math.PI / 180;
+				}
+
 				console.log("before toRad: " + lat1,lon1, lat2, lon2)
 				lat1 = Number(lat1);
 				lon1 = Number(lon1);
