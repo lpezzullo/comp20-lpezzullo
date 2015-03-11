@@ -105,9 +105,10 @@
 				// Drop the other markers & give them info windows:
 				for (var k in markers) {
 					markers[k].setMap(map);
+					var markerwindow = new google.maps.InfoWindow();
 					google.maps.event.addListener(markers[k], 'click', function() {
-						infowindow.setContent(markers[k].title);
-						infowindow.open(map, markers[k]);
+						markerwindow.setContent(markers[k].title);
+						markerwindow.open(map, markers[k]);
 					});
 				}
 				
