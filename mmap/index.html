@@ -12,6 +12,7 @@
 			var xhr;
 			var data;
 			var markers = [];
+			var windows = [];
 
 			function init() {
 				var myLat = 0;
@@ -104,11 +105,14 @@
 
 				// Drop the other markers & give them info windows:
 				for (var k in markers) {
+					if (markers[k].title == "RoyMcFatter") {
+						continue;
+					}
 					markers[k].setMap(map);
-					var markerwindow = new google.maps.InfoWindow();
+					windows[k] = new google.maps.InfoWindow();
 					google.maps.event.addListener(markers[k], 'click', function() {
-						markerwindow.setContent(markers[k].title);
-						markerwindow.open(map, markers[k]);
+						windows[k].setContent(markers[k].title);
+						windows[k].open(map, markers[k]);
 					});
 				}
 				
