@@ -38,10 +38,13 @@
 
 					// For every user, make a marker & put it in the array.
 					var j = 0;
+					var myIndex = 0;
+
 					for(var i in data) {	
 
 						// Unless it's me!
 						if (data[i].login=="RoyMcFatter") { 
+							myIndex = i;
 							continue;
 						}
 
@@ -49,13 +52,12 @@
 						landmark = new google.maps.LatLng(data[i].lat, data[i].lng);
 
 						// Make a marker in the markers array...
-						markers[j] = new google.maps.Marker({	
+						markers[i] = new google.maps.Marker({	
 							position: landmark,
 							title: data[i].login
 						});
-						j++;
 					}
-					drawMap();
+					drawMap(data[myIndex].lat, data[myIndex].lng);
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
 					console.log("Error 500");
