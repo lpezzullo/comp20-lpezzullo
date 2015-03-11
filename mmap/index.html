@@ -161,7 +161,8 @@
 				var d = R * c;
 
 				var metersPerMile = 1609.34;
-				var inMiles = d / metersPerMile;
+				var inMiles = ((d / metersPerMile)*1000) / 1000;
+
 				inMiles = inMiles.toString() + " miles away from you";
 
 				return inMiles;
