@@ -112,13 +112,13 @@
 
 					markers[k].setMap(map);
 
-					function() {
+					(function() {
 						windows[k] = new google.maps.InfoWindow();
 						google.maps.event.addListener(markers[k], 'click', function() {
 							windows[k].setContent(markers[k].title);
 							windows[k].open(map, markers[k]);
 						});
-					}
+					}())
 				}	
 			}
 
