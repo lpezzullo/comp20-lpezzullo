@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Marauder's Map</title>
+	<link rel="stylesheet" href="style.css" />
+	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+		<script>
+			var xhr;
+			var data;
+			var markers = [];
+			var windows = [];
+			var distances = [];
+
+			function init() {
+				if (!navigator.geolocation) {
+					alert("Sorry - your browser does not support geolocation.");
+				}
+				var myLat = 0;
+				var myLng = 0;
+				navigator.geolocation.getCurrentPosition(function(position) {
+					myLat = position.coords.latitude;
+					myLng = position.coords.longitude;
+					xhr = new XMLHttpRequest();
+					xhr.open("post", "https://secret-about-box.herokuapp.com/sendLocation", true);
+					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhr.onreadystatechange = dataReady;
+					xhr.send("login=RoyMcFatter&lat=" + myLat + "&lng=" + myLng);
+					});
+				
+			}
+
+			function dataReady() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					data = JSON.parse(xhr.responseText);
+					var landmark = new google.maps.LatLng(0,0);
+
+					// For every user, make a marker & put it in the array.
+					var j = 0;
+					var myIndex = 0;
+
+					for(var i in data) {	
+
+						// Unless it's me!
+						if (data[i].login=="RoyMcFatter") { 
+							myIndex = i;
+							continue;
+						}
+
+						landmark = new google.maps.LatLng(data[i].lat, data[i].lng);
+
+						// Make a marker in the markers array...
+						markers[i] = new google.maps.Marker({	
+							position: landmark,
+							title: data[i].login
+						});
+					}
+					drawMap(data[myIndex].lat, data[myIndex].lng);
+				}
+				else if (xhr.readyState == 4 && xhr.status == 500) {
+					alert("Error 500");
+				}
+			}
+
+			function drawMap(myLat, myLng)
+			{
+
+				// My Location
+				var landmark = new google.maps.LatLng(myLat,myLng);
+			
+				// Set up map
+				var myOptions = {
+					zoom: 13,
+					center: landmark,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				
+				// Create the map in the "map-canvas" <div>
+				var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+
+				// Drop my marker
+				var birdIcon = new Image();
+				birdIcon.src = "me2.jpg";
+				birdIcon.addEventListener("load", function() {
+
+					// Create the marker			
+					var marker = new google.maps.Marker({
+						position: landmark,
+						title: "RoyMcFatter",
+						icon: birdIcon.src
+					});
+					marker.setMap(map);
+
+					// Create my info window
+					var infowindow = new google.maps.InfoWindow();
+	
+					// Open info window on click of marker
+					google.maps.event.addListener(marker, 'click', function() {
+						infowindow.setContent(marker.title);
+						infowindow.open(map, marker);
+						});
+				}, false);
+
+				// Drop the other markers & give them info windows:
+				var theirLat = 0;
+				var theirLng = 0;
+
+				for (var k in markers) {
+
+					// Skip me!
+					if (markers[k].title == "RoyMcFatter") {
+						continue;
+					}
+
+					theirLat = markers[k].getPosition().lat();
+					theirLng = markers[k].getPosition().lng();
+
+					// Drop marker, get its distance, and make an info window.
+					(function(k, theirLat, theirLng) {
+						markers[k].setMap(map);
+
+						distances[k] = haversine(myLat, myLng, theirLat, theirLng);
+						windows[k] = new google.maps.InfoWindow();
+
+						google.maps.event.addListener(markers[k], 'click', function() {
+							windows[k].setContent("<div><p>" + markers[k].title + "</p><p>" + distances[k] + "</p></div>");
+							windows[k].open(map, markers[k]);
+						});
+					})(k, theirLat, theirLng);
+				}	
+			}
+
+			function haversine(lat1, lon1, lat2, lon2) 
+			{
+				var R = 6371000;
+
+				Number.prototype.toRad = function() {
+					return this * Math.PI / 180;
+				}		
+
+				var psi1 = lat1.toRad();
+				var psi2 = lat2.toRad();
+				var dPsi = (lat2-lat1).toRad();
+				var dGam = (lon2-lon1).toRad();
+
+				var a = Math.sin(dPsi/2) * Math.sin(dPsi/2) +
+				        Math.cos(psi1) * Math.cos(psi2) *
+				        Math.sin(dGam/2) * Math.sin(dGam/2);
+				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+				var d = R * c;
+
+				// Convert to miles and round to 3 decimal places.
+				var metersPerMile = 1609.34;
+				var inMiles = d / metersPerMile;
+				inMiles = Math.round(inMiles*1000) / 1000;
+
+				inMiles = inMiles.toString() + " miles away from you";
+
+				return inMiles;
+			}
+
+		</script>
+	</head>
+	<body onload = "init()">
+		<div id = "map-canvas">
+			<p><h1>"I solemnly swear that I am up to no good."</h1></p>
+			<p><h3>Getting your location...</h3></p>
+		</div>
+	</body>
+</html>
