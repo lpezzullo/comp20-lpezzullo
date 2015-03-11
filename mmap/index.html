@@ -5,10 +5,6 @@
 	<link rel="stylesheet" href="style.css" />
 	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		<script>
-
-		// 1. Read in data
-		// 2. Draw map, centered on me
-		// 3. Drop markers for others
 			var xhr;
 			var data;
 			var markers = [];
@@ -69,6 +65,7 @@
 			function drawMap(myLat, myLng)
 			{
 				console.log("Executing drawMap()");
+
 				// My Location
 				var landmark = new google.maps.LatLng(myLat,myLng);
 			
@@ -79,14 +76,15 @@
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};
 				
-				// Create the map in the "map_canvas" <div>
+				// Create the map in the "map-canvas" <div>
 				var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
 
 				// Drop my marker
 				var birdIcon = new Image();
 				birdIcon.src = "me2.jpg";
 				birdIcon.addEventListener("load", function() {
-					// Create a marker			
+
+					// Create the marker			
 					var marker = new google.maps.Marker({
 						position: landmark,
 						title: "RoyMcFatter",
@@ -94,7 +92,7 @@
 					});
 					marker.setMap(map);
 
-					// This is a global info window...
+					// Create my info window
 					var infowindow = new google.maps.InfoWindow();
 	
 					// Open info window on click of marker
@@ -104,9 +102,10 @@
 						});
 				}, false);
 
+				// Drop the other markers & give them info windows:
 				var theirLat = 0;
 				var theirLng = 0;
-				// Drop the other markers & give them info windows:
+
 				for (var k in markers) {
 					if (markers[k].title == "RoyMcFatter") {
 						continue;
@@ -118,10 +117,6 @@
 					(function(k, theirLat, theirLng) {
 						markers[k].setMap(map);
 
-						console.log("myLat = " + myLat + ", myLng = " + myLng);
-						console.log("theirLat = " + theirLat + ", theirLng = " + theirLng);
-
-//						distance = haversine(myLat, myLng, markers[k].getPosition());
 						distances[k] = haversine(myLat, myLng, theirLat, theirLng);
 						console.log("distance to " + markers[k].title + " = " + distances[k]);
 						windows[k] = new google.maps.InfoWindow();
@@ -143,10 +138,11 @@
 				}
 
 				console.log("before toRad: " + lat1,lon1, lat2, lon2)
-				lat1 = Number(lat1);
+/*				lat1 = Number(lat1);
 				lon1 = Number(lon1);
 				lat2 - Number(lat2);
 				lon2 = Number(lon2);
+*/				
 
 				var psi1 = lat1.toRad();
 				var psi2 = lat2.toRad();
