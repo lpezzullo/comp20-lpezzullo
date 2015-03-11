@@ -113,7 +113,7 @@
 					(function(k) {
 						markers[k].setMap(map);
 
-						distance = haversine(myLat, myLng, markers[k].position);
+						distance = haversine(myLat, myLng, markers[k].getPosition());
 						console.log("distance to " + markers[k].title + " = " + distance);
 						windows[k] = new google.maps.InfoWindow();
 
