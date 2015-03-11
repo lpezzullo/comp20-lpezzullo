@@ -113,7 +113,8 @@
 					(function(k) {
 						markers[k].setMap(map);
 
-					//	distance = haversine(myLat, myLng, markers[k].getPosition());
+						distance = haversine(myLat, myLng, markers[k].position);
+						console.log("distance to " + markers[k].title + " = " + distance);
 						windows[k] = new google.maps.InfoWindow();
 
 						google.maps.event.addListener(markers[k], 'click', function() {
@@ -125,8 +126,9 @@
 					})(k);
 				}	
 			}
-/*
-			function haversine(myLat, myLng, theirPos) {
+
+			function haversine(myLat, myLng, theirPos) 
+			{
 				var R = 6371000; // metres
 				
 				var lat1 = myLat;
@@ -148,11 +150,11 @@
 
 				var metersPerMile = 1609.34;
 				var inMiles = d/metersPerMile;
-				inMiles = inMiles.toString() + " miles from you";
+				inMiles = inMiles.toString() + " miles away from you";
 
 				return inMiles;
 			}
-*/
+
 		</script>
 	</head>
 	<body onload = "init()">
