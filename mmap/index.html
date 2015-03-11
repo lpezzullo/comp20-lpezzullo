@@ -77,6 +77,8 @@
 				
 				// Create the map in the "map_canvas" <div>
 				var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+/*
+				// Drop my marker
 				var birdIcon = new Image();
 				birdIcon.src = "me2.jpg";
 				birdIcon.addEventListener("load", function() {
@@ -97,7 +99,7 @@
 						infowindow.open(map, marker);
 						});
 				}, false);
-/*
+
 				// Drop the other markers & give them info windows:
 				for (var k in markers) {
 					markers[k].setMap(map);
