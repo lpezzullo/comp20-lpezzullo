@@ -55,13 +55,13 @@
 						});
 						j++;
 					}
-//					drawMap();
+					drawMap();
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
 					console.log("Error 500");
 				}
 			}
-/*
+
 			function drawMap(myLat, myLng)
 			{
 				console.log("Executing drawMap()");
@@ -90,7 +90,7 @@
 
 					// This is a global info window...
 					var infowindow = new google.maps.InfoWindow();
-					
+/*					
 					// Open info window on click of marker
 					google.maps.event.addListener(marker, 'click', function() {
 						infowindow.setContent(marker.title);
@@ -106,8 +106,9 @@
 						infowindow.open(map, markers[k]);
 					});
 				}
+				*/
 			}
-*/
+
 		</script>
 	</head>
 	<body onload = "init()">
