@@ -136,20 +136,20 @@ console.log("theirLat = " + theirLat + ", theirLng = " + theirLng);
 			{
 				var R = 6371000; // metres
 
-				console.log(lat1,lon1, lat2, lon2)
+				console.log("before toRad: " + lat1,lon1, lat2, lon2)
 				lat1 = Number(lat1);
 				lon1 = Number(lon1);
 				lat2 - Number(lat2);
 				lon2 = Number(lon2);
 
-				var φ1 = lat1.toRad();
-				var φ2 = lat2.toRad();
-				var Δφ = (lat2-lat1).toRad();
-				var Δλ = (lon2-lon1).toRad();
+				var psi1 = lat1.toRad();
+				var psi2 = lat2.toRad();
+				var dPsi = (lat2-lat1).toRad();
+				var dGam = (lon2-lon1).toRad();
 
-				var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-				        Math.cos(φ1) * Math.cos(φ2) *
-				        Math.sin(Δλ/2) * Math.sin(Δλ/2);
+				var a = Math.sin(dPsi/2) * Math.sin(dPsi/2) +
+				        Math.cos(psi1) * Math.cos(psi2) *
+				        Math.sin(dGam/2) * Math.sin(dGam/2);
 				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
 				var d = R * c;
