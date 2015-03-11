@@ -13,6 +13,7 @@
 			var data;
 			var markers = [];
 			var windows = [];
+			var listeners = [];
 
 			function init() {
 				var myLat = 0;
@@ -108,14 +109,17 @@
 					if (markers[k].title == "RoyMcFatter") {
 						continue;
 					}
+
 					markers[k].setMap(map);
-					windows[k] = new google.maps.InfoWindow();
-					google.maps.event.addListener(markers[k], 'click', function() {
-						windows[k].setContent(markers[k].title);
-						windows[k].open(map, markers[k]);
-					});
-				}
-				
+
+					function() {
+						windows[k] = new google.maps.InfoWindow();
+						google.maps.event.addListener(markers[k], 'click', function() {
+							windows[k].setContent(markers[k].title);
+							windows[k].open(map, markers[k]);
+						});
+					}
+				}	
 			}
 
 		</script>
