@@ -123,8 +123,7 @@ console.log("theirLat = " + theirLat + ", theirLng = " + theirLng);
 						windows[k] = new google.maps.InfoWindow();
 
 						google.maps.event.addListener(markers[k], 'click', function() {
-							windows[k].setContent("<div><p>" + markers[k].title + "</p>
-								<p>" + distance + "</p></div>");
+							windows[k].setContent("<div><p>" + markers[k].title + "</p><p>" + distance + "</p></div>");
 							windows[k].open(map, markers[k]);
 						});
 					})(k);
