@@ -113,18 +113,19 @@
 					(function(k) {
 						markers[k].setMap(map);
 
-						distance = haversine(myLat, myLng, markers[k].getPosition());
+					//	distance = haversine(myLat, myLng, markers[k].getPosition());
 						windows[k] = new google.maps.InfoWindow();
 
 						google.maps.event.addListener(markers[k], 'click', function() {
-							windows[k].setContent("<p>" + markers[k].title + "</p><p>" + 
-								distance + "</p>");
+							windows[k].setContent("<div>" + markers[k].title + "</div>");
+								//<p>" + 
+								//distance + "</p>");
 							windows[k].open(map, markers[k]);
 						});
 					})(k);
 				}	
 			}
-
+/*
 			function haversine(myLat, myLng, theirPos) {
 				var R = 6371000; // metres
 				
@@ -151,7 +152,7 @@
 
 				return inMiles;
 			}
-
+*/
 		</script>
 	</head>
 	<body onload = "init()">
