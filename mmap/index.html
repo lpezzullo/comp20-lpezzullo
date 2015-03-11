@@ -10,39 +10,10 @@
 		// 2. Draw map, centered on me
 		// 3. Drop markers for others
 			var xhr;
+			var data;
+			var markers[];
 
-			var myOptions = {
-				zoom: 13,
-				center: landmark,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
-			
-			// Create the map in the "map_canvas" <div>
-			var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-
-/*			function init() {
-				var myLat = 0;
-				var myLng = 0;
-				
-				console.log("1. In getMyLocation()");
-				if (navigator.geolocation) { 
-					navigator.geolocation.getCurrentPosition(function(position) {
-							console.log("2. Finally got your location!");
-							myLat = position.coords.latitude;
-							myLng = position.coords.longitude;
-							drawMap(myLat,myLng);
-							console.log("Lat = " + myLat + ", Long = " + myLng);
-							console.log("3. Leaving the function(position)...");
-						});
-				}
-				else {
-					alert("Geolocation is not supported by your web browser.  What a shame!");
-				}
-				console.log("4. Leaving getMyLocation(). Good bye cruel world!");
-				
-			}
-*/
-			function getData() {
+			function init() {
 				var myLat = 0;
 				var myLng = 0;
 				navigator.geolocation.getCurrentPosition(function(position) {
@@ -62,10 +33,11 @@
 				console.log("Ready state changed to" + xhr.readyState);
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					console.log("Got data!");
-					var data = JSON.parse(xhr.responseText);
+					data = JSON.parse(xhr.responseText);
 					var landmark = new google.maps.LatLng(0,0);
 
-					// For every user, drop a marker.
+					// For every user, make a marker & put it in the array.
+					var j = 0;
 					for(var i in data) {	
 
 						// Unless it's me!
@@ -76,28 +48,20 @@
 						console.log(data[i].login);
 						landmark = new google.maps.LatLng(data[i].lat, data[i].lng);
 
-						// Make a marker...
-						var marker = new google.maps.Marker({	
+						// Make a marker in the markers array...
+						markers[j] = new google.maps.Marker({	
 							position: landmark,
 							title: data[i].login
 						});
-
-						// Drop it on the map...
-						marker.setMap(map);
-
-						// And add a clickable info box.
-						google.maps.event.addListener(marker, 'click', function() {
-							infowindow.setContent(marker.title);
-							infowindow.open(map, marker);
-							});
+						j++;
 					}
-//					document.getElementById("map-canvas").innerHTML += JSON.parse(xhr.responseText);
+					drawMap();
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
 					console.log("Error 500");
 				}
 			}
-/*
+
 			function drawMap(myLat, myLng)
 			{
 				console.log("Executing drawMap()");
@@ -133,8 +97,18 @@
 						infowindow.open(map, marker);
 						});
 				}, false);
+
+				// Drop the other markers & give them info windows:
+				for (var k in markers) {
+					markers[k].setMap(map);
+					google.maps.event.addListener(marker, 'click', function() {
+						infowindow.setContent(marker[k].title);
+						infowindow.open(map, marker[k]);
+					});
+				}
+				marker.setMap(map);
 			}
-*/
+			
 		</script>
 	</head>
 	<body onload = "init()">
