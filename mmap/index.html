@@ -12,10 +12,12 @@
 			var distances = [];
 
 			function init() {
+				if (!navigator.geolocation) {
+					alert("Sorry - your browser does not support geolocation.");
+				}
 				var myLat = 0;
 				var myLng = 0;
 				navigator.geolocation.getCurrentPosition(function(position) {
-					console.log("2. Finally got your location!");
 					myLat = position.coords.latitude;
 					myLng = position.coords.longitude;
 					xhr = new XMLHttpRequest();
@@ -28,9 +30,7 @@
 			}
 
 			function dataReady() {
-				console.log("Ready state changed to" + xhr.readyState);
 				if (xhr.readyState == 4 && xhr.status == 200) {
-					console.log("Got data!");
 					data = JSON.parse(xhr.responseText);
 					var landmark = new google.maps.LatLng(0,0);
 
@@ -46,7 +46,6 @@
 							continue;
 						}
 
-						console.log(data[i].login);
 						landmark = new google.maps.LatLng(data[i].lat, data[i].lng);
 
 						// Make a marker in the markers array...
@@ -58,13 +57,12 @@
 					drawMap(data[myIndex].lat, data[myIndex].lng);
 				}
 				else if (xhr.readyState == 4 && xhr.status == 500) {
-					console.log("Error 500");
+					alert("Error 500");
 				}
 			}
 
 			function drawMap(myLat, myLng)
 			{
-				console.log("Executing drawMap()");
 
 				// My Location
 				var landmark = new google.maps.LatLng(myLat,myLng);
@@ -107,6 +105,8 @@
 				var theirLng = 0;
 
 				for (var k in markers) {
+
+					// Skip me!
 					if (markers[k].title == "RoyMcFatter") {
 						continue;
 					}
@@ -114,11 +114,11 @@
 					theirLat = markers[k].getPosition().lat();
 					theirLng = markers[k].getPosition().lng();
 
+					// Drop marker, get its distance, and make an info window.
 					(function(k, theirLat, theirLng) {
 						markers[k].setMap(map);
 
 						distances[k] = haversine(myLat, myLng, theirLat, theirLng);
-						console.log("distance to " + markers[k].title + " = " + distances[k]);
 						windows[k] = new google.maps.InfoWindow();
 
 						google.maps.event.addListener(markers[k], 'click', function() {
@@ -131,18 +131,11 @@
 
 			function haversine(lat1, lon1, lat2, lon2) 
 			{
-				var R = 6371000; // metres
+				var R = 6371000;
 
 				Number.prototype.toRad = function() {
 					return this * Math.PI / 180;
-				}
-
-				console.log("before toRad: " + lat1,lon1, lat2, lon2)
-/*				lat1 = Number(lat1);
-				lon1 = Number(lon1);
-				lat2 - Number(lat2);
-				lon2 = Number(lon2);
-*/				
+				}		
 
 				var psi1 = lat1.toRad();
 				var psi2 = lat2.toRad();
@@ -156,6 +149,7 @@
 
 				var d = R * c;
 
+				// Convert to miles and round to 3 decimal places.
 				var metersPerMile = 1609.34;
 				var inMiles = d / metersPerMile;
 				inMiles = Math.round(inMiles*1000) / 1000;
@@ -168,6 +162,6 @@
 		</script>
 	</head>
 	<body onload = "init()">
-		<div id = "map-canvas">Getting your location...</div>
+		<div id = "map-canvas"><h1>Getting your location...</h1></div>
 	</body>
 </html>
