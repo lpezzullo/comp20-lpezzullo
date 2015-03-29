@@ -8,7 +8,7 @@
 	<script>
 		$(document).ready(function(){
 			$("#msg").change(function() {
-				update = $("#msg").val() + new Date();
+				update = new Date() + " - " + $("#msg").val();
 				console.log("update = " + update);
 				theLog = $("#log");
 
