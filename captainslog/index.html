@@ -7,8 +7,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
+			console.log("Document is ready");
 			$("#msg").change(function() {
+				console.log("Msg 'change' event triggered");
 				update = $("#msg").value;
+				console.log("update = " + update);
 				theLog = $("#log");
 
 			  	theLog.prepend("<p>" + update + "</p>");
