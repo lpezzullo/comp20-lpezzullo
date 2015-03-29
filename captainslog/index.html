@@ -7,9 +7,14 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
+			var i = 0;
 			$("#msg").change(function() {
 				update = new Date() + " - " + $("#msg").val();
 				console.log("update = " + update);
+				newkey = "captainslog" + i;
+				console.log("newkey = " + newkey);
+				localStorage.setItem(newkey, update);
+				console.log("stored: " + localStorage[newkey]);
 				theLog = $("#log");
 
 			  	theLog.prepend("<p>" + update + "</p>");
