@@ -36,6 +36,7 @@
 				localStorage.setItem(newkey, update);
 				console.log("stored: " + localStorage[newkey]);
 				$("#log").prepend("<p>" + update + "</p>");
+				this.value = "";
 			});
 		});
 	</script>
