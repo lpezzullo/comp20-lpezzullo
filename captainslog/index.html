@@ -6,7 +6,14 @@
 	<title>Captain's Log</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
-	  // Most of your work will be done here...
+		$(document).ready(function(){
+			function post() {
+				update = $("#msg").value;
+				theLog = $("#log");
+
+			  	theLog.prepend("<p>" + update + "</p>");
+			}
+		});
 	</script>
 </head>
 
