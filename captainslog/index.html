@@ -6,6 +6,23 @@
 	<title>Captain's Log</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
+		function onload() {
+			var updates = [];
+			var j = 0;
+			for(key in localStorage) {
+				if (key.substr(0,11) != "captainslog") {
+					console.log("Skipping key " + localStorage[key]);
+					continue;
+				} else {
+					updates[j] = localStorage[key];
+					console.log("Saving key " + localStorage[key])
+				}
+			}
+
+			$.each(updates, function() {
+				$("#log").prepend("<p>" + update + "</p>");
+			});
+		}
 		$(document).ready(function(){
 			var i = 0;
 			$("#msg").change(function() {
@@ -15,9 +32,7 @@
 				console.log("newkey = " + newkey);
 				localStorage.setItem(newkey, update);
 				console.log("stored: " + localStorage[newkey]);
-				theLog = $("#log");
-
-			  	theLog.prepend("<p>" + update + "</p>");
+				$("#log").prepend("<p>" + update + "</p>");
 			});
 		});
 	</script>
