@@ -30,8 +30,8 @@
 				newkey = "cptlg" + theDate.getTime();
 				localStorage.setItem(newkey, update);
 				$("#log").prepend("<p>" + update + "</p>");
+				$("#msg").val('');
 			});
-			$("#msg").val("");
 		});
 	</script>
 </head>
