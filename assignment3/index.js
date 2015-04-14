@@ -18,6 +18,7 @@ app.get('/', function(request, response) {
 
 app.post('/whatup', function(request,response) {
 	heresWhatsUp = request.body.message;
+	response.send("thats cool");
 });
 
 app.get('/whatup', function(request,response) {
