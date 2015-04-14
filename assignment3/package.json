@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "express": "~4.9.x",
+    "body-parser": "latest",
+    "validator":"latest"
   },
   "engines": {
     "node": "0.10.x"
