@@ -22,6 +22,7 @@ app.post('/whatup', function(request,response) {
 });
 
 app.get('/whatup', function(request,response) {
+	heresWhatsUp = "you called the get function!";
 	response.set('Content-Type', 'text/html');
 	var indexPage = "";
 	indexPage += "<!DOCTYPE HTML><html><head><title>what up</title></head><body><h1>whats up friendo</h1><p>";
