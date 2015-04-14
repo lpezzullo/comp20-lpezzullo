@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
-var heresWhatsUp = "";
+var heresWhatsUp = "empty";
 
 app.get('/', function(request, response) {
   response.send("It's working!");
