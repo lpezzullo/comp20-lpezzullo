@@ -27,6 +27,25 @@ app.post('/whatup', function(request,response) {
 	response.send("thats cool");
 });
 
+app.get('/list', function(request, response) {
+	response.set('Content-Type', 'text/html');
+	var indexPage = '';
+	db.collection('pasta', function(er, collection) {
+		collection.find().toArray(function(err, cursor) {
+			if (!err) {
+				indexPage += "<!DOCTYPE HTML><html><head><title>the pasta list</title></head><body><h1>mamma mia. that's a spicy meatball</h1>";
+				for (var count = 0; count < cursor.length; count++) {
+					indexPage += "<p>there's pasta called " + cursor[count].pastaName + "!</p>";
+				}
+				indexPage += "</body></html>"
+				response.send(indexPage);
+			} else {
+				response.send('<!DOCTYPE HTML><html><head><title>the pasta list</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
+			}
+		});
+	});
+});
+
 app.get('/whatup', function(request,response) {
 	heresWhatsUp = "you called the get function!";
 	response.set('Content-Type', 'text/html');
