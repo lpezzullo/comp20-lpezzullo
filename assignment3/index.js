@@ -42,11 +42,7 @@ app.post('/sendLocation', function(request, response) {
 	});
 });
 
-// !!!!!! CHECK FOR ZERO-ENTRIES CONDITION !!!!!!!!!!
-// DON'T forget to make everything CORS-enabled except the empty GET.
 app.get('/', function(request, response) {
-	// User types in: /location.json?login=<LOGIN>
-	// To access login sent by user: req.query.login
 
 	response.header("Access-Control-Allow-Origin", "*");
   	response.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -54,7 +50,7 @@ app.get('/', function(request, response) {
 	var indexPage = '';
 	db.collection('locations', function(er, collection) {
 		collection.find().toArray(function(err, cursor) {
-			if (!err) {
+			if ((!err)&&(cursor.length !=0)) {
 				indexPage += "<!DOCTYPE HTML><html><head><title>Marauder Locations</title></head><body><h1>where is everbody?</h1>";
 				for (var count = 0; count < cursor.length; count++) {
 					indexPage += "<p>" + cursor[count].login + " last logged in from " + cursor[count].lat + ", " + cursor[count].lng + " on " + cursor[count].created_at + "</p>";
@@ -66,6 +62,28 @@ app.get('/', function(request, response) {
 			}
 		});
 	});
+});
+
+app.get('/location.json', function(request, response) {
+
+	response.header("Access-Control-Allow-Origin", "*");
+  	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+	var findLogin = request.body.login;
+	var sendBack;
+	db.collection('locations', function(er, collection) {
+		if (!er) {
+			collection.find({login:findLogin},{limit:1}, function(err,cursor) {
+				if (cursor.length == 1) {
+					response.send(cursor[0]);
+				} else {
+					response.send("{}");
+				}
+			});
+		} else {
+			response.send("Sorry! Something went wrong.");
+		}
+	}
+
 });
 
 	
