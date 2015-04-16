@@ -39,13 +39,13 @@ app.post('/sendLocation', function(request, response) {
 			"lng" : newLng,
 			"created_at" : new Date()
 		};
-		console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
+//		console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
 		var id = coll.update({login:newLogin}, toInsert, {upsert:true}, function(error2, saved) {
 			if (error2) {
 				response.send(500);
 			}
 			else {
-				console.log("Inserted user!");
+				// console.log("Inserted user!");
 				response.send(200);
 			}
 	    });
@@ -83,15 +83,15 @@ app.get('/location.json', function(request, response) {
 		if (!er) {
 			collection.find({login:findLogin},{limit:1}).toArray(function(err,cursor) {
 				if (!err) {
-					console.log("findLogin is set to " + findLogin);
-					console.log("Cursor length is " + cursor.length);
+					//console.log("findLogin is set to " + findLogin);
+					//console.log("Cursor length is " + cursor.length);
 					if (cursor.length != 0) {
 						response.send(cursor[0]);
 					} else {
 						response.send("{}");
 					}
 				} else {
-					console.log("Collection.find() threw an error.");
+					//console.log("Collection.find() threw an error.");
 				}
 			});
 		} else {
@@ -101,6 +101,6 @@ app.get('/location.json', function(request, response) {
 });
 
 	
-	app.listen(app.get('port'), function() {
-	console.log("Node app is running at localhost:" + app.get('port'));
+app.listen(app.get('port'), function() {
+	//console.log("Node app is running at localhost:" + app.get('port'));
 });
