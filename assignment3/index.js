@@ -85,13 +85,17 @@ app.get('/location.json', function(request, response) {
 			console.log("You're getting an error in connecting to 'locations'");
 		}*/
 		if (!er) {
-			collection.find().toArray({login:findLogin},{limit:1}, function(err,cursor) {
-				console.log("findLogin is set to " + findLogin);
-				console.log("Cursor length is " + cursor.length);
-				if (cursor.length != 0) {
-					response.send(cursor[0]);
+			collection.find({login:findLogin},{limit:1}).toArray(function(err,cursor) {
+				if (!err) {
+					console.log("findLogin is set to " + findLogin);
+					console.log("Cursor length is " + cursor.length);
+					if (cursor.length != 0) {
+						response.send(cursor[0]);
+					} else {
+						response.send("{}");
+					}
 				} else {
-					response.send("{}");
+					console.log("Collection.find() threw an error.");
 				}
 			});
 		} else {
