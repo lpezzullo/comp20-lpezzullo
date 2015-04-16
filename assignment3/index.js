@@ -17,33 +17,43 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 });
 
 app.post('/sendLocation', function(request, response) {
-	var login = request.body.login;
-	var lat = request.body.lat;
-	var lng = request.body.lng;
+	response.header("Access-Control-Allow-Origin", "*");
+  	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+	var newLogin = request.body.login;
+	var newLat = request.body.lat;
+	var newLng = request.body.lng;
 	var toInsert = {
-		"login" : login,
-		"lat" : lat,
-		"lng" : lng,
+		"login" : newLogin,
+		"lat" : newLat,
+		"lng" : newLng,
 		"created_at" : new Date()
 	};
 	console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
 	db.collection('locations', function(error1, coll) {
+
+			// USE MONGO API FCNS TO GUARANTEE NO DUPLICATES
+			// UPSERT ITERATES FOR YOU
+			// JUST UPSERT
 		var id = coll.insert(toInsert, function(error2, saved) {
 			if (error2) {
 				response.send(500);
 			}
 			else {
-				console.log("Inserted login!");
+				console.log("Inserted new user login!");
 				response.send(200);
 			}
 	    });
 	});
 });
 
-
+// !!!!!! CHECK FOR ZERO-ENTRIES CONDITION !!!!!!!!!!
+// DON'T forget to make everything CORS-enabled except the empty GET.
 app.get('/', function(request, response) {
 	// User types in: /location.json?login=<LOGIN>
 	// To access login sent by user: req.query.login
+
+	response.header("Access-Control-Allow-Origin", "*");
+  	response.header("Access-Control-Allow-Headers", "X-Requested-With");
 	response.set('Content-Type', 'text/html');
 	var indexPage = '';
 	db.collection('locations', function(er, collection) {
