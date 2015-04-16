@@ -21,7 +21,7 @@
 					myLat = position.coords.latitude;
 					myLng = position.coords.longitude;
 					xhr = new XMLHttpRequest();
-					xhr.open("post", "https://calm-oasis-6539.herokuapp.com/sendLocation", true);
+					xhr.open("post", "http://calm-oasis-6539.herokuapp.com/sendLocation", true);
 					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					xhr.onreadystatechange = dataReady;
 					xhr.send("login=RoyMcFatter&lat=" + myLat + "&lng=" + myLng);
