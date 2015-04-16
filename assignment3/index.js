@@ -28,7 +28,7 @@ app.post('/sendLocation', function(request, response) {
 		"lng" : newLng,
 		"created_at" : new Date()
 	};
-	console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
+//	console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
 	db.collection('locations', function(error1, coll) {
 		var newLogin = request.body.login;
 		var newLat = request.body.lat;
