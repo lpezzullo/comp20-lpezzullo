@@ -64,7 +64,7 @@ app.get('/', function(request, response) {
 	});
 });
 
-app.get('/location.json', function(request, response) {
+app.get('/location.json', function(request, response) {	
 
 	response.header("Access-Control-Allow-Origin", "*");
   	response.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -82,8 +82,7 @@ app.get('/location.json', function(request, response) {
 		} else {
 			response.send("Sorry! Something went wrong.");
 		}
-	}
-
+	});
 });
 
 	
