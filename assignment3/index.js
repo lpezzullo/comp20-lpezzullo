@@ -68,7 +68,7 @@ app.get('/', function(request, response) {
 				indexPage += "</body></html>"
 				response.send(indexPage);
 			} else {
-				response.send('<!DOCTYPE HTML><html><head><title>Marauder Locations</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
+				response.send('<!DOCTYPE HTML><html><head><title>Marauder Locations</title></head><body><h1>Sorry, something went wrong.</h1></body></html>');
 			}
 		});
 	});
