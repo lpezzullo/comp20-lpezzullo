@@ -1,0 +1,5 @@
+{
+  "name": "Marauder's Map Server",
+  "description": "Node.js app serving Marauder's Map page using Express 4",
+  "repository": "https://github.com/tuftsdev/comp20-lpezzullo/assignment3"
+}
