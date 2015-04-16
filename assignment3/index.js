@@ -30,16 +30,12 @@ app.post('/sendLocation', function(request, response) {
 	};
 	console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
 	db.collection('locations', function(error1, coll) {
-
-			// USE MONGO API FCNS TO GUARANTEE NO DUPLICATES
-			// UPSERT ITERATES FOR YOU
-			// JUST UPSERT
-		var id = coll.insert(toInsert, function(error2, saved) {
+		var id = coll.update({login:newLogin}, toInsert, {upsert:true}, function(error2, saved) {
 			if (error2) {
 				response.send(500);
 			}
 			else {
-				console.log("Inserted new user login!");
+				console.log("Inserted user!");
 				response.send(200);
 			}
 	    });
