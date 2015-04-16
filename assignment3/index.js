@@ -68,12 +68,26 @@ app.get('/location.json', function(request, response) {
 
 	response.header("Access-Control-Allow-Origin", "*");
   	response.header("Access-Control-Allow-Headers", "X-Requested-With");
-	var findLogin = request.body.login;
-	var sendBack;
+	var findLogin = request.query.login;
 	db.collection('locations', function(er, collection) {
 		if (!er) {
+			console.log("No error occurred in connecting to 'locations'");
+			collection.find({login:findLogin}, function(err, cursor) {
+				if(!err) {
+					console.log("No error in finding findLogin = " + findLogin);
+					response.send("No error in finding findLogin = " + findLogin);
+				} else {
+					console.log("Error in finding findLogin = " + findLogin);
+					response.send("Error in finding findLogin = " + findLogin);
+				}
+			});
+		} else {
+			console.log("You're getting an error in connecting to 'locations'");
+		}
+/*		if (!er) {
 			collection.find({login:findLogin},{limit:1}, function(err,cursor) {
-				if (cursor.length == 1) {
+				console.log("Cursor length is " + cursor.length)
+				if (cursor.length != 0) {
 					response.send(cursor[0]);
 				} else {
 					response.send("{}");
@@ -81,7 +95,7 @@ app.get('/location.json', function(request, response) {
 			});
 		} else {
 			response.send("Sorry! Something went wrong.");
-		}
+		} */
 	});
 });
 
