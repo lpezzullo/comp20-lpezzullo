@@ -16,31 +16,31 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
 });
 
-/*	
-app.get('/', function(request, response) {
-  response.send("It's working!");
-});
-
 app.post('/sendLocation', function(request, response) {
-	var noodle = request.body.noodle;
+	var login = request.body.login;
+	var lat = request.body.lat;
+	var lng = request.body.lng;
 	var toInsert = {
-		"noodle": noodle,
+		"login" : login,
+		"lat" : lat,
+		"lng" : lng,
+		"created_at" : new Date()
 	};
-	console.log("toInsert = " + toInsert.noodle);
-	db.collection('pasta', function(error1, coll) {
-		var id = coll.toInsertt(toInsert, function(error2, saved) {
+	console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
+	db.collection('locations', function(error1, coll) {
+		var id = coll.insert(toInsert, function(error2, saved) {
 			if (error2) {
 				response.send(500);
 			}
 			else {
-				console.log("Jake, it's okay...");
+				console.log("Inserted login!");
 				response.send(200);
 			}
 	    });
 	});
 });
 
-*/
+
 app.get('/', function(request, response) {
 	// User types in: /location.json?login=<LOGIN>
 	// To access login sent by user: req.query.login
