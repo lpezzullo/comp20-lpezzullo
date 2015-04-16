@@ -30,6 +30,16 @@ app.post('/sendLocation', function(request, response) {
 	};
 	console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
 	db.collection('locations', function(error1, coll) {
+		var newLogin = request.body.login;
+		var newLat = request.body.lat;
+		var newLng = request.body.lng;
+		var toInsert = {
+			"login" : newLogin,
+			"lat" : newLat,
+			"lng" : newLng,
+			"created_at" : new Date()
+		};
+		console.log("toInsert = " + toInsert.login + " " + toInsert.created_at);
 		var id = coll.update({login:newLogin}, toInsert, {upsert:true}, function(error2, saved) {
 			if (error2) {
 				response.send(500);
@@ -70,20 +80,6 @@ app.get('/location.json', function(request, response) {
   	response.header("Access-Control-Allow-Headers", "X-Requested-With");
 	var findLogin = request.query.login;
 	db.collection('locations', function(er, collection) {
-/*		if (!er) {
-			console.log("No error occurred in connecting to 'locations'");
-			collection.find({login:findLogin}, function(err, cursor) {
-				if(!err) {
-					console.log("No error in finding findLogin = " + findLogin);
-					response.send("No error in finding findLogin = " + findLogin);
-				} else {
-					console.log("Error in finding findLogin = " + findLogin);
-					response.send("Error in finding findLogin = " + findLogin);
-				}
-			});
-		} else {
-			console.log("You're getting an error in connecting to 'locations'");
-		}*/
 		if (!er) {
 			collection.find({login:findLogin},{limit:1}).toArray(function(err,cursor) {
 				if (!err) {
