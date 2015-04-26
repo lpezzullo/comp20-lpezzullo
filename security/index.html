@@ -8,9 +8,11 @@
     	<h1>Marauder's Map + Server Security Report</h1>
 
     	<h3>Introduction</h3>
+
             <p>The <b>"Marauder's Map"</b> is a web application by a Comp 20 student which allows the client to "check in" with their GPS coordinates (using an anonymized login) and see the timestamped coordinates of all other users who have "checked in". There is a username (WHAT'S THE USERNAME?) hard-coded into the web interface, located <a href="http://tuftsdev.github.io/comp20-bwilliamson/mmap">here</a>. The current web interface user's location is marked on the map - created using the Google Maps API - with a custom marker, while all other check-ins are indicated by the default markers provided by Google Maps. Users can also "check in" by submitting a login and GPS coordinates, in JSON format, directly to the server, which will respond with a JSON file containing the updated list of check-in locations.</p>
 
-            <p>This report will detail the <b>security vulnerabilities</b> found in </p> the 
+            <p>This report will detail the <b>security vulnerabilities</b> found in </p> the application (both the server and the web interface). It is concerned with simple vulnerabilities that could easily be exploited by an amateur using free tools such as curl and tactics such as XSS (cross-site scripting), and flaws in the code and data handling of the application itself, rather with questions of copying and misuse of the entire work.</p>
+
     	<h3>Methodology</h3>
     	<h3>Abstract of Findings</h3>
     	<h3>Issues Found</h3>
