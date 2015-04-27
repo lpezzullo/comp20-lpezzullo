@@ -14,6 +14,11 @@
             <p>This report will detail the <b>security vulnerabilities</b> found in </p> the application (both the server and the web interface). It is concerned with simple vulnerabilities that could easily be exploited by an amateur using free tools such as curl and tactics such as XSS (cross-site scripting), and flaws in the code and data handling of the application itself, rather with questions of copying and misuse of the entire work.</p>
 
     	<h3>Methodology</h3>
+
+            <p>First, I conducted "black box" testing, without consulting the application code. I used the tool "curl" to send data that would insert content from other websites (in this case, YouTube) onto the homepage of the application - a serious security threat, explained in more detail below.</p>
+
+            <p>Then, I consulted the code, and conducted "white box" testing with reference to this. I used the tool "Postman", a Google Chrome extension, to send a PDF file to the server, which caused it to crash. Finally, I used the same tool to send the first 53 chapters of Herman Melville's Moby-Dick, in plain text, to the server, which also caused it to crash.</p>
+
     	<h3>Abstract of Findings</h3>
     	<h3>Issues Found</h3>
     	<h3>Conclusion</h3>
