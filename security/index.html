@@ -2,7 +2,6 @@
 
 <html>
 	<head>
-        <link rel="stylesheet" href="style.css">
     	<title>Marauder's Map + Server Security Report</title>
     </head>
     <body>
@@ -12,7 +11,7 @@
 
             <p>The <b>"Marauder's Map"</b> is a web application by a Comp 20 student which allows the client to "check in" with their GPS coordinates (using an anonymized login) and see the timestamped coordinates of all other users who have "checked in". There is a username (WHAT'S THE USERNAME?) hard-coded into the web interface, located <a href="http://tuftsdev.github.io/comp20-bwilliamson/mmap">here</a>. The current web interface user's location is marked on the map - created using the Google Maps API - with a custom marker, while all other check-ins are indicated by the default markers provided by Google Maps. Users can also "check in" by submitting a login and GPS coordinates, in JSON format, directly to the server, which will respond with a JSON file containing the updated list of check-in locations.</p>
 
-            <p>This report will detail the <b>security vulnerabilities</b> found in </p> the application (both the server and the web interface). It is concerned with simple vulnerabilities that could easily be exploited by an amateur using free tools such as curl and tactics such as XSS (cross-site scripting), and flaws in the code and data handling of the application itself, rather with questions of copying and misuse of the entire work.</p>
+            <p>This report will detail the <b>security vulnerabilities</b> found in the application (both the server and the web interface). It is concerned with simple vulnerabilities that could easily be exploited by an amateur using free tools such as curl and tactics such as XSS (cross-site scripting), and flaws in the code and data handling of the application itself, rather with questions of copying and misuse of the entire work.</p>
 
     	<h3>Methodology</h3>
 
@@ -24,19 +23,68 @@
 
     	<h3>Issues Found</h3>
 
-        <oll>
-            <li><h5>1. XSS Vulnerability</h5>
+        <ol>
+            <li><h5>XSS Vulnerability</h5>
                 <ul>
                     <li>Data containing scripts that access content on other sites can be included in a request to the POST (/sendLocation) API, and the database accepts this input, stores it, and (most problematically) embeds it in the homepage the next time it is accessed.</li>
 
                     <li>This issue is exploited via the POST (/sendLocation) API, and can harm users via the homepage.</li>
 
-                    <li>Script that accesses content from other sites can be passed to the application by embedding it in a POST request. I used curl to submit the embed code for a YouTube video: <code>curl --data &#39;login=&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/zgjOSGTDoy8&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&amp;lat=1234&amp;lng=5678&#39; http://murmuring-hamlet-2776.herokuapp.com/</code> This code is then rendered in the client's browser on the application homepage:<img src="XSS-Goat.png" alt="A video of a sheep screaming like a human, hosted on YouTube, embedded in the application homepage" /></li>
+                    <li>I used curl to submit the embed code for a YouTube video: 
+                        <p><code>curl --data &#39;login=&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/zgjOSGTDoy8&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&amp;lat=1234&amp;lng=5678&#39; http://murmuring-hamlet-2776.herokuapp.com/</code> </p>
+                    This code is then rendered in the client's browser on the application homepage:
+                        <p><img src="XSS-Goat.png" alt="A video of a sheep screaming like a human, hosted on YouTube, embedded in the application homepage" /></p></li>
 
                     <li>Severity of threat: <b>High</b> - This vulnerability can be exploited to embed foreign content and deface the site, risking hate crime, as well as triggering PTSD, any number of other psychiatric episodes, or epilepsy. It can also be used to redirect the user to a malicious site, or to download malicious content to their machine.</li>
 
+                    <li><b>Resolution:</b> This issue can be resolved by adding code which checks all user input for HTML special characters immediately, before any processing takes place. It should be inserted immediately after the checks for "null" fields and should encode these special characters using HTML encoding, so that when embedded in the homepage, they will be rendered as text, not compiled as script.</li>
+                </ul>
+            </li>
+            <li><h5>Incorrect filetype crash</h5>
+                <ul>
+                    <li>Expected data fields can be submitted with file types other than text/JSON and will be accepted by the POST /sendLocation API, since the fields still contain data and are not "null". Subsequent processing of this incorrect file type causes the server to crash.</li>
 
+                    <li>This issue affects the server application itself, but anyone using the application will no longer be able to do so when the server crashes.</li>
+
+                    <li>I used Postman to submit a PDF file as the "lat" field of a POST request:
+                        <p><img src="PDF-crash-postman.png" alt="A PDF has been uploaded in Postman to be send in the lat field, and the response is displayed as Heroku's server error page." /></p>
+                        This caused the server to crash:
+                        <p><img src="PDF-crash-log.png" alt="Heroku logs show that the server crashed after this request was received." /></p></li>
+
+                    <li>Severity of threat: <b>High</b> - In my test cases, the server came back online within a few minutes. However, it's possible that larger or intentionally malicious files could more seriously damage the server or compromise the privacy of the data stored in it.</li>
+
+                    <li><b>Resolution:</b> This issue can be solved by checking the request header for the content-type of each item:
+                        <p><img src="PDF-crash-preview.png" alt="The content-type of the rogue file is 'application/pdf', different from the plain text of the other fields." /></p>
+                    To do this, code should be included, before even the null checks on incoming data, which checks in the request header that the "Content-Type" value is set to "application/json".</li>
+                </ul>
+            </li>
+            <li><h5>High-volume text crash</h5>
+                <ul>
+                    <li>A very long request, even of the correct file type, is accepted by the POST /sendLocation API. It attempts to process it and crashes.</li>
+
+                    <li>As above: This issue affects the server application itself, but anyone using the application will no longer be able to do so when the server crashes.</li>
+
+                    <li>I used Postman to send approximately half of the text (53 chapters plus a few paragraphs) of Herman Melville's Moby-Dick, in plain text (the expected type), as the value of the "login" field of the request:
+                        <p><img src="text-crash-postman.png" alt="The first half of Moby-Dick has been pasted as plain text into the login field of the Postman request." /></p>
+                    This caused the server to crash:
+                        <p><img src="text-crash-log.png" alt="Heroku logs show that the server crashed after this request was received." /></p></li>
+
+                    <li>Severity of threat: <b>Medium</b> - Enough text dumping might severely break the database, or simply take up so much space that the host would need to begin paying for what they had been using as a free service. This could permanently crash the application until the database were manually repaired or dumped. However, it would not download malicious content, redirect the user, or deface the site.</li>
+
+                    <li><b>Resolution:</b> Once user input passes the filetype checks, but before reaching the null checks, code should be added which counts the characters in each field and stops after some arbitrary, low number - neither coordinate should be longer than 11 characters, and there is no reason for the username to be longer than 20. If any counter reaches the arbitrary value before the end of the string, the input should not be processed.</li>
+                </ul>
+            </li>
+        </ol>
 
     	<h3>Conclusion</h3>
+
+        There are several serious vulnerabilities in the Marauder's Map which could allow it to be exploited, to the detriment of users - via XSS malicious content and malicious files uploaded to the database - as well as to the application, through malicious files uploaded to the database and to text dumping. Fortunately, however, all of these issues can be rectified with the above described security checks on incoming data to the POST /sendLocation API:
+        <ol>
+            <li>Check the content-type header of each request; throw out anything not "application/json".</li>
+            <li>Check the length of each field of the request; throw out anything longer than a reasonable limit (11-20 characters).</li>
+            <li>Check the request for special characters; encode them using HTML encoding, so they will not execute as script, only render as text.</li>
+        </ol>
+
+        These changes would be quick and simple to write, and are strongly recommended for the security of the application and the safety of its users.
     </body>
 </html>
