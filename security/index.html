@@ -15,11 +15,12 @@
 
     	<h3>Methodology</h3>
 
-            <p>First, I conducted "black box" testing, without consulting the application code. I used the tool "curl" to send data that would insert content from other websites (in this case, YouTube) onto the homepage of the application - a serious security threat, explained in more detail below.</p>
-
-            <p>Then, I consulted the code, and conducted "white box" testing with reference to this. I used the tool "Postman", a Google Chrome extension, to send a PDF file to the server, which caused it to crash. Finally, I used the same tool to send the first 53 chapters of Herman Melville's Moby-Dick, in plain text, to the server, which also caused it to crash.</p>
+            <p>First, I conducted "black box" testing, without consulting the application code. I used curl to test for cross-site scripting vulnerabilities. Then, I consulted the code and conducted "white box" testing. I used the Google Chrome extension Postman to send unexpected data to the application and test for crashes.</p>
 
     	<h3>Abstract of Findings</h3>
+
+            <p>The application has at least three vulnerabilities. First, anyone can send it data that will cause it to render potentially malicious content on the user's browser when the application homepage is accessed (http://murmuring-hamlet-2776.herokuapp.com/). Anyone can also send it data of the incorrect file type, or an extremely high volume of data, both of which cause the server to crash. All of these vulnerabilities result from the fact that data sent by the user is accepted and processed by the server almost immediately, with virtually no security checks</p>
+
     	<h3>Issues Found</h3>
     	<h3>Conclusion</h3>
     </body>
