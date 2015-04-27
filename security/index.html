@@ -22,6 +22,20 @@
             <p>The application has at least three vulnerabilities. First, anyone can send it data that will cause it to render potentially malicious content on the user's browser when the application homepage is accessed (http://murmuring-hamlet-2776.herokuapp.com/). Anyone can also send it data of the incorrect file type, or an extremely high volume of data, both of which cause the server to crash. All of these vulnerabilities result from the fact that data sent by the user is accepted and processed by the server almost immediately, with virtually no security checks</p>
 
     	<h3>Issues Found</h3>
+
+        <oll>
+            <li><h5>1. XSS Vulnerability</h5>
+                <ul>
+                    <li>Data containing scripts that access content on other sites can be included in a request to the POST (/sendLocation) API, and the database accepts this input, stores it, and (most problematically) embeds it in the homepage the next time it is accessed.</li>
+
+                    <li>This issue is exploited via the POST (/sendLocation) API, and can harm users via the homepage.</li>
+
+                    <li>Script that accesses content from other sites can be passed to the application by embedding it in a POST request. I used curl to submit the embed code for a YouTube video: <code>curl --data &#39;login=&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/zgjOSGTDoy8&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&amp;lat=1234&amp;lng=5678&#39; http://murmuring-hamlet-2776.herokuapp.com/</code> This code is then rendered in the client's browser on the application homepage:<img src="XSS-goat.png" /></li>
+
+                    <li>Severity of threat: <b>High</b> - This vulnerability can be exploited to embed foreign content and deface the site, risking hate crime, as well as triggering PTSD, any number of other psychiatric episodes, or epilepsy. It can also be used to redirect the user to a malicious site, or to download malicious content to their machine.</li>
+
+
+
     	<h3>Conclusion</h3>
     </body>
 </html>
